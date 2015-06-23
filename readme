@@ -1,0 +1,19 @@
+Follow these steps to build the Sumo Robot code for the Arduino.
+
+STEP 1: Import the folder "SumoRobot" inside "Arduino_Library" as a library in Arduino.
+To do this open Arduino (now sigh loudly wishing that this was a real IDE) and import the library using "Sketch" > "Include Library" > "Add .ZIP Library". You can point to the folder (even if it is not a zip file) and Arduino will import it. Arduino will copy this library to a different folder, the location of which depends on your OS. Make sure you make changes to files in this location only otherwise Arduino will not pick up the changes.
+
+STEP 2: Make sure that you have included the correct robot header file in the SumoRobot.cpp file
+Open the SumoRobot.cpp file in your favourite text editor (Notepad, etc)
+Look for the line #include "Robot1Config.h"
+Here, we are using the Robot1Config.h file to define the pins for the robot. If the pins listed on the robot config file do not match the ones on your robot, you need to change them in the file or use a different file.
+
+STEP 3: Open any Arduino project from the "Arduino_Projects" directory with Arduino and load it to your robot.
+
+
+
+
+
+PROJECTS:
+1) Manual: Use the "Manual" project to manually drive the robot and debug it using the Android app
+2) StayInside: The "StayInside" project has code that makes the robot stay inside the ring
