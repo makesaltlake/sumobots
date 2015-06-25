@@ -67,62 +67,40 @@ void SumoRobot::stop(){
 }
 
 
-void SumoRobot::forward(int n){
-	if (m_turboSpeed){
-		setPWM(LEFT_FWD, RIGHT_FWD);
-		delay(n);	
-	} else {
-		setPWM(LEFT_FWD, RIGHT_FWD);
-		delay(n);	
-	}
+void SumoRobot::forward(){
+	setPWM(LEFT_FWD, RIGHT_FWD);
 }
 
-void SumoRobot::reverse(int n){
-	if (m_turboSpeed){
-		setPWM(LEFT_REVERSE, RIGHT_REVERSE);
-		delay(n);
-	} else {
-		setPWM(LEFT_REVERSE, RIGHT_REVERSE);
-		delay(n);	
-	}
+void SumoRobot::reverse(){
+	setPWM(LEFT_REVERSE, RIGHT_REVERSE);
 }
 
-void SumoRobot::left(int n){
+void SumoRobot::left(){
 	setPWM(STOP, RIGHT_FWD);
-	delay(n);
 }
 
-void SumoRobot::right(int n){
+void SumoRobot::right(){
 	setPWM(LEFT_FWD, STOP);
-	delay(n);
 }
 
-void SumoRobot::sharpLeft(int n){
-	for (int i = 0; i < n; i++){
-		setPWM(LEFT_REVERSE, RIGHT_FWD);
-		delay(10);
-		stop();
-		delay(20);
-	}
+void SumoRobot::sharpLeft(){
+	setPWM(LEFT_REVERSE, RIGHT_FWD);
 }
 
-void SumoRobot::sharpRight(int n){
+void SumoRobot::sharpRight(){
 	setPWM(LEFT_FWD, RIGHT_REVERSE);
-	delay(10);
+}
+
+void SumoRobot::reverseTurn(){
+	setPWM(LEFT_REVERSE, STOP);
 }
 
 void SumoRobot::turnAround(){
-	sharpRight(TIME_FOR_COMPLETE_TURN);
-
+	sharpRight();
 }
 
 void SumoRobot::search(){
-	if (m_advancedSearch){
-		forward(5);
-	}
-	else {
-		forward(5);
-	}
+	forward();
 }
 
 void SumoRobot::enableBackDistanceSensor(){
@@ -140,3 +118,5 @@ void SumoRobot::enableTurboSpeed(){
 void SumoRobot::enableAdvancedSearch(){
 	m_advancedSearch = true;
 }
+
+

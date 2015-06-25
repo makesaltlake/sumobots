@@ -1,10 +1,14 @@
 #include "SumoRobot.h"
+#include <SoftwareSerial.h>
 
+//#define mySerial Serial
 SumoRobot robot;
 
+SoftwareSerial mySerial(8, 7);
+
 void setup()   {
-  Serial.begin(9600);  
-  Serial.setTimeout(100);
+  mySerial.begin(9600);  
+  mySerial.setTimeout(100);
   robot.enableBackLineSensor();
   robot.enableBackDistanceSensor();
 }
@@ -12,8 +16,8 @@ void setup()   {
 
 void loop()                     
 {
-  if (Serial.available() > 0) {
-      int configVal = Serial.read();
+  if (mySerial.available() > 0) {
+      int configVal = mySerial.read();
       if (configVal == 'f'){
         robot.forward(1);
       }
@@ -45,5 +49,5 @@ void loop()
    line.concat(", ");
    line.concat(String(lineSensors[1]));
 
-   Serial.println(line);
+   mySerial.println(line);
 }

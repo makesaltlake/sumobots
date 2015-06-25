@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 
-#define NUM_READINGS 10
-#define TIME_BETWEEN_READINGS 10
+#define NUM_READINGS 3
+#define TIME_BETWEEN_READINGS 2
 #define TIME_FOR_COMPLETE_TURN 1
 
 class SumoRobot{
@@ -22,12 +22,12 @@ class SumoRobot{
 	public:
 		SumoRobot();
 		void stop();
-		void forward(int n);
-		void reverse(int n);
-		void left(int n);
-		void right(int n);
-		void sharpLeft(int n);
-		void sharpRight(int n);	
+		void forward();
+		void reverse();
+		void left();
+		void right();
+		void sharpLeft();
+		void sharpRight();	
 		void search();
 		void turnAround();	
 		int* readDistanceSensors();
@@ -36,6 +36,7 @@ class SumoRobot{
 		void enableBackLineSensor();
 		void enableTurboSpeed();
 		void enableAdvancedSearch();
+		void reverseTurn();
 };
 
 #endif
