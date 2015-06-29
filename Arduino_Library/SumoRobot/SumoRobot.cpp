@@ -1,25 +1,30 @@
 #include "SumoRobot.h"
-#include "Robot1Config.h"
+#include "BlueRobot1.h"
 
-
+#define NUM_READINGS 3
+#define TIME_BETWEEN_READINGS 10
+#define LINE_SENSOR_THRESHOLD 300
 
 SumoRobot::SumoRobot(){
 	
 	m_backDistanceSensorEnabled = false;
 	m_backLineSensorEnabled = false;
-	m_advancedSearch = false;
-	m_turboSpeed = false;
 	
 	m_distanceSensorReadings = new int[3];
 	m_lineSensorReadings = new bool[2];
 	
 	pinMode(LeftMotor, OUTPUT);
 	pinMode(RightMotor, OUTPUT);
+
 	pinMode(LeftDistanceSensor, INPUT);
 	pinMode(RightDistanceSensor, INPUT);
 	pinMode(BackDistanceSensor, INPUT);
+
 	pinMode(FrontLineSensor, INPUT);
 	pinMode(BackLineSensor, INPUT);
+	
+	m_frontLineSensorBlackVal += analogRead(FrontLineSensor);
+	m_backLineSensorBlackVal += analogRead(BackLineSensor);
 }
 
 int SumoRobot::getDistanceReading(int pin){
@@ -45,21 +50,46 @@ int* SumoRobot::readDistanceSensors(){
 }
 
 bool* SumoRobot::readLineSensors(){
-	m_lineSensorReadings[0] = !digitalRead(FrontLineSensor);
+
+/*
+	int val = analogRead(FrontLineSensor);
+	m_lineSensorReadings[0] = (m_frontLineSensorBlackVal - val >= LINE_SENSOR_THRESHOLD);
 	
 	if (m_backLineSensorEnabled){
-		m_lineSensorReadings[1] = !digitalRead(BackLineSensor);
+		val = analogRead(BackLineSensor);
+		m_lineSensorReadings[1] = (m_backLineSensorBlackVal - val >= LINE_SENSOR_THRESHOLD);
 	} else {
 		m_lineSensorReadings[1] = false;
 	}
+
 	return m_lineSensorReadings;
+*/
+
+	int val = analogRead(FrontLineSensor);
+	m_lineSensorReadings[0] = (val <= LINE_SENSOR_THRESHOLD);
+	
+	if (m_backLineSensorEnabled){
+		val = analogRead(BackLineSensor);
+		m_lineSensorReadings[1] = (val <= LINE_SENSOR_THRESHOLD);
+	} else {
+		m_lineSensorReadings[1] = false;
+	}
+
+	return m_lineSensorReadings;
+
+	
 }
 
 
 
 void SumoRobot::setPWM(int leftPWM, int rightPWM){
-	analogWrite(LeftMotor, leftPWM);
-	analogWrite(RightMotor, rightPWM);
+	if (random(100) < 50){
+		analogWrite(LeftMotor, leftPWM);
+		analogWrite(RightMotor, rightPWM);
+	} else {
+		analogWrite(RightMotor, rightPWM);
+		analogWrite(LeftMotor, leftPWM);
+	}
 }
 
 void SumoRobot::stop(){
@@ -95,13 +125,6 @@ void SumoRobot::reverseTurn(){
 	setPWM(LEFT_REVERSE, STOP);
 }
 
-void SumoRobot::turnAround(){
-	sharpRight();
-}
-
-void SumoRobot::search(){
-	forward();
-}
 
 void SumoRobot::enableBackDistanceSensor(){
 	m_backDistanceSensorEnabled = true;
@@ -110,13 +133,4 @@ void SumoRobot::enableBackDistanceSensor(){
 void SumoRobot::enableBackLineSensor(){
 	m_backLineSensorEnabled = true;
 }
-
-void SumoRobot::enableTurboSpeed(){
-	m_turboSpeed = true;
-}
-
-void SumoRobot::enableAdvancedSearch(){
-	m_advancedSearch = true;
-}
-
 

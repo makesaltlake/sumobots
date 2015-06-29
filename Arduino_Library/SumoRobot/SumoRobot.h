@@ -3,8 +3,7 @@
 
 #include "Arduino.h"
 
-#define NUM_READINGS 3
-#define TIME_BETWEEN_READINGS 2
+
 #define TIME_FOR_COMPLETE_TURN 1
 
 class SumoRobot{
@@ -14,11 +13,10 @@ class SumoRobot{
 		bool m_backLineSensorEnabled;
 		int* m_distanceSensorReadings;
 		bool* m_lineSensorReadings;
-		bool m_advancedSearch;
-		bool m_turboSpeed;
 		int getDistanceReading(int reading);
 		void setPWM(int leftPWM, int rightPWM);
-		
+		int m_frontLineSensorBlackVal;
+		int m_backLineSensorBlackVal;
 	public:
 		SumoRobot();
 		void stop();
@@ -28,14 +26,10 @@ class SumoRobot{
 		void right();
 		void sharpLeft();
 		void sharpRight();	
-		void search();
-		void turnAround();	
 		int* readDistanceSensors();
 		bool* readLineSensors();
 		void enableBackDistanceSensor();
 		void enableBackLineSensor();
-		void enableTurboSpeed();
-		void enableAdvancedSearch();
 		void reverseTurn();
 };
 
